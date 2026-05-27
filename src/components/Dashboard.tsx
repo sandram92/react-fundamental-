@@ -24,25 +24,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 */
 
 function Counter() {
-  // 🐍 Python equivalent: self.count = 0 in __init__
-  // But Python needs manual UI updates, React auto-updates!
-  
-  // ❌ BAD: Variable doesn't trigger re-renders
-  // let count = 0;
-  // const increment = () => {
-  //   count += 1;  // Changes but UI doesn't update!
-  //   console.log('Count changed to:', count); // Only shows in console
-  // };
-  // const decrement = () => {
-  //   count -= 1;  // Changes but UI doesn't update!
-  //   console.log('Count changed to:', count);
-  // };
-  // const reset = () => {
-  //   count = 0;  // Changes but UI doesn't update!
-  //   console.log('Count reset to:', count);
-  // };
 
-  // ✅ GOOD: useState triggers automatic re-renders
   const [count, setCount] = useState(0);
   const increment = () => setCount(count + 1);
   const decrement = () => setCount(count - 1);
