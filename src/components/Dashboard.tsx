@@ -1,9 +1,3 @@
-/**
- * File: src/components/Dashboard.tsx
- * 
- * Progressive React Tutorial - Personal Dashboard
- * Uncomment sections as you teach each pattern!
- */
 
 'use client';
 
@@ -11,17 +5,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-// =====================================
-// PATTERN 1: useState - State Management
-// =====================================
 
-/*
-🎯 KEY TAKEAWAYS:
-• useState triggers automatic UI re-renders when state changes
-• Regular variables change internally but don't update the UI
-• useState is React's way of connecting data to the visual interface
-• Always use setState functions, never mutate state directly
-*/
 
 function Counter() {
 
@@ -37,6 +21,15 @@ function Counter() {
         Counter Widget
         <span className="pattern-badge">useState</span>
       </h3>
+      <div >
+{/* write fe bulett points whayts use effect is */}
+        <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>
+          <li>useState triggers UI updates when state changes</li>
+          <li>Regular variables won't cause re-renders</li>
+          <li>Always use setState to update state</li>
+          <li>State is the source of truth for your UI</li>
+        </ul>
+      </div>
       <div className="text-center mb-4">
         <div className="text-3xl font-bold my-4">
           {count}
@@ -54,25 +47,14 @@ function Counter() {
   );
 }
 
-// =====================================
-// PATTERN 2: useEffect - Side Effects
-// =====================================
 
-/*
-🎯 KEY TAKEAWAYS:
-• useEffect handles side effects (timers, API calls, subscriptions)
-• Never run side effects directly in render function - causes infinite loops
-• Always clean up side effects to prevent memory leaks
-• Empty dependency array [] means "run once on mount"
-• useEffect cleanup function runs when component unmounts
-*/
 
 function Clock() {
   const [time, setTime] = useState<Date | null>(null);
   const [showBadExample, setShowBadExample] = useState(false);
   const [renderCount, setRenderCount] = useState(0);
 
-  // // // Track renders for demonstration
+    // // // Track renders for demonstration
   // useEffect(() => {
   //   setRenderCount(prev => prev + 1);
   // });
@@ -81,23 +63,24 @@ function Clock() {
   // if (showBadExample) {
   //   console.log(`🔥 RENDER #${renderCount}: Creating new timer...`);
   //   setTimeout(() => {
-  //     setTime(new Date()); // This will trigger another render!
+  //     setTime(new Date()); 
   //   }, 1000);
   // }
 
-  // ✅ GOOD: useEffect handles side effects properly
+
   useEffect(() => {
     if (!showBadExample) {
-      // Fix hydration mismatch by only setting time after client mount
+
+
       setTime(new Date());
       
-      // 🐍 Python: Like __enter__ in context manager
+
       const timer = setInterval(() => {
         setTime(new Date());
       }, 1000);
       
-      // 🐍 Python: Like __exit__ in context manager
-      return () => clearInterval(timer); // Cleanup prevents memory leaks
+   
+      return () => clearInterval(timer); 
     }
   }, [showBadExample]); // Re-run when demo mode changes
 
@@ -108,6 +91,16 @@ function Clock() {
         Live Clock
         <span className="pattern-badge">useEffect</span>
       </h3>
+      <div >
+        <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>
+          <li>useEffect handles side effects (timers, API calls, subscriptions)</li>
+          <li>Never run side effects directly in render function - causes infinite loops</li>
+          <li>Always clean up side effects to prevent memory leaks</li>
+          <li>Empty dependency array [] means "run once on mount"</li>
+          <li>useEffect runs whenever dependencies change [dependencies]</li>
+          <li>useEffect cleanup function runs when component unmounts</li>
+        </ul>
+      </div>
       
       {/* Demo Toggle */}
       <div className="mb-4 text-center">
@@ -161,14 +154,6 @@ function Clock() {
 • Component composition allows building complex UIs from simple parts
 */
 
-// ❌ BAD: Hardcoded, not reusable
-// function SubmitButton() {
-//   return <button className="btn btn-primary">Submit</button>;
-// }
-// function CancelButton() {
-//   return <button className="btn btn-secondary">Cancel</button>;
-// }
-
 // ✅ GOOD: Reusable component with props
 interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'destructive' | 'Sean';
@@ -181,8 +166,7 @@ interface ButtonProps {
 }
 
 function Button({ variant = 'primary', children, onClick, disabled = false, type = 'button', style, className }: ButtonProps) {
-  // 🐍 Python: Like function parameters with defaults
-  // def button(variant='primary', children=None, on_click=None, disabled=False):
+ 
   
   return (
     <button 
@@ -208,6 +192,14 @@ function ButtonShowcase() {
       <p className="text-sm mb-4" style={{ color: 'var(--muted-foreground)' }}>
         One component, multiple styles via props
       </p>
+      <div>
+        <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>
+          <li>Props customize component behavior and appearance</li>
+          <li>Default props make components easier to use</li>
+          <li>Component composition builds complex UIs from simple parts</li>
+          <li>TypeScript interfaces define expected props for better developer experience</li>
+        </ul>
+      </div>
       <div className="flex flex-row gap-3 justify-center">
         <Button variant="primary" onClick={() => alert('Primary!')}>
           Primary Button
@@ -279,19 +271,9 @@ function UserProfile() {
     fetchUser();
   }, []);
 
-  // ❌ BAD: Shows everything at once - confusing to users!
-  // return (
-  //   <div className="widget">
-  //     <h3>User Profile</h3>
-  //     <div>Loading...</div>
-  //     <div>Error: Something went wrong</div>
-  //     <div>Welcome, John!</div>
-  //     <div>Please log in</div>
-  //   </div>
-  // );
 
   // ✅ GOOD: Show appropriate state
-  // 🐍 Python: Like if/elif/else statements
+
   return (
     <div className="widget">
       <h3>
@@ -353,14 +335,6 @@ function UserProfile() {
 // PATTERN 5: List Rendering & Keys
 // =====================================
 
-/*
-🎯 KEY TAKEAWAYS:
-• Always use unique keys when rendering lists in React
-• Keys help React track which items changed, added, or removed
-• Without keys, React may incorrectly update or re-render components
-• Use stable, unique identifiers as keys (not array indexes when possible)
-• Array indexes as keys can cause bugs when list order changes
-*/
 
 interface Todo {
   id: number;
@@ -392,6 +366,15 @@ function TodoList() {
         Learning Checklist
         <span className="pattern-badge">List Rendering</span>
       </h3>
+
+      <div>
+        <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>  
+          <li>Keys are essential for list rendering in React</li>
+          <li>Unique keys help React optimize rendering and avoid bugs</li>
+          <li>Never use array indexes as keys if list can change order</li>
+          <li>Use stable identifiers (like IDs) for keys whenever possible</li>
+        </ul>
+      </div>
       
       <div className="mb-4">
         <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>
@@ -476,18 +459,7 @@ function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [nextId, setNextId] = useState(1); // Counter for generating unique IDs
 
-  // ❌ BAD: Inline functions create new functions every render
-  // This causes child components to re-render unnecessarily
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   // Validation logic here
-  //   setSubmitted(true);
-  // };
-  
-  // In JSX: onChange={(e) => setFormData({...formData, name: e.target.value})}
-  // Creates new function every render = performance issue!
 
-  // ✅ GOOD: useCallback prevents unnecessary re-renders
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -572,6 +544,19 @@ function ContactForm() {
       <p className="text-sm mb-4" style={{ color: 'var(--muted-foreground)' }}>
         Controlled components with validation and multiple data persistence
       </p>
+      <div>
+        <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>
+          <li>Controlled components keep form state in React (not DOM)</li>
+          <li>Always prevent default behavior in form submissions</li>
+          <li>Use onChange to keep state in sync with inputs</li>
+          <li>Validate inputs and show helpful error messages</li>
+          <li>useCallback prevents unnecessary re-renders in child components</li>
+          <li>useMemo optimizes expensive calculations</li>
+          <li>Avoid inline functions in JSX for better performance</li>
+          <li>Store and display multiple submitted data entries for better user experience</li>
+          <li>Side-by-side layout for form and submitted data display</li>
+        </ul>
+      </div>
       
       {/* Side-by-side layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -922,6 +907,15 @@ function ThemeToggle() {
       <p className="text-sm mb-4" style={{ color: 'var(--muted-foreground)' }}>
         Global state without prop drilling
       </p>
+      <div>
+        <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>
+          <li>Context API eliminates "prop drilling" (passing props through many levels)</li>
+          <li>Create context with createContext, provide with Provider, consume with useContext</li>
+          <li>Only use context for truly global state (theme, user auth, language)</li>
+          <li>Don't overuse context - local state is often better</li>
+          <li>Always check if context exists before using it to avoid errors</li>
+        </ul>
+      </div>
       <div className="text-center">
         <div className="text-xl mb-4">
           Current theme: <strong>{theme}</strong>
@@ -938,33 +932,13 @@ function ThemeToggle() {
 // PATTERN 8: Custom Hooks & Performance -- useMemo
 // =====================================
 
-/*
-🎯 KEY TAKEAWAYS:
-• Custom hooks extract reusable stateful logic between components
-• useMemo prevents expensive calculations on every render
-• Only memoize when you have actual performance problems
-• Custom hooks follow the same rules as built-in hooks
-• Hooks must start with "use" and only be called at top level
-• localStorage integration is a perfect use case for custom hooks
-*/
 
-// Custom hook - reusable logic
-// Note: The actual implementation is now in src/hooks/useLocalStorage.ts for better organization
 
 function NotesWidget() {
   const [notes, setNotes] = useLocalStorage<string[]>('tutorial-notes', []);
   const [newNote, setNewNote] = useState('');
 
-  // ❌ BAD: Expensive calculation runs on every render (even when notes don't change)
-  // const noteStats = {
-  //   total: notes.length,
-  //   long: notes.filter(note => note.length > 10).length,
-  //   avgLength: notes.reduce((sum, note) => sum + note.length, 0) / notes.length
-  // };
-  // console.log('📊 Calculating note statistics...'); // This runs on EVERY render!
 
-  // ✅ GOOD: useMemo only recalculates when notes change
-  // 🐍 Python: Like @lru_cache decorator
   const noteStats = useMemo(() => {
     console.log('📊 Calculating note statistics...'); // You'll only see this when notes change
     return {
@@ -992,6 +966,16 @@ function NotesWidget() {
         Smart Notes
         <span className="pattern-badge">Custom Hooks</span>
       </h3>
+      <div>
+        <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>
+          <li>Custom hooks extract reusable stateful logic between components</li>
+          <li>useMemo prevents expensive calculations on every render</li>
+          <li>Only memoize when you have actual performance problems</li>
+          <li>Custom hooks follow the same rules as built-in hooks</li>
+          <li>Hooks must start with "use" and only be called at top level</li>
+          <li>localStorage integration is a perfect use case for custom hooks</li>
+        </ul>
+      </div>
       
       <div className="grid grid-cols-3 gap-2 text-center p-3 rounded mb-4" style={{ 
         background: 'var(--muted)'
