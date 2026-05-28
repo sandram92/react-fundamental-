@@ -25,7 +25,7 @@ function Counter() {
 {/* write fe bulett points whayts use effect is */}
         <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>
           <li>useState triggers UI updates when state changes</li>
-          <li>Regular variables won't cause re-renders</li>
+          <li>Regular variables wont cause re-renders</li>
           <li>Always use setState to update state</li>
           <li>State is the source of truth for your UI</li>
         </ul>
