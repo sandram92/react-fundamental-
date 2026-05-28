@@ -52,7 +52,7 @@ function Counter() {
 function Clock() {
   const [time, setTime] = useState<Date | null>(null);
   const [showBadExample, setShowBadExample] = useState(false);
-  const [renderCount, setRenderCount] = useState(0);
+  const [renderCount] = useState(0);
 
     // // // Track renders for demonstration
   // useEffect(() => {
@@ -96,7 +96,7 @@ function Clock() {
           <li>useEffect handles side effects (timers, API calls, subscriptions)</li>
           <li>Never run side effects directly in render function - causes infinite loops</li>
           <li>Always clean up side effects to prevent memory leaks</li>
-          <li>Empty dependency array [] means "run once on mount"</li>
+          <li>Empty dependency array [] means -run once on mount </li>
           <li>useEffect runs whenever dependencies change [dependencies]</li>
           <li>useEffect cleanup function runs when component unmounts</li>
         </ul>
@@ -145,16 +145,6 @@ function Clock() {
 // PATTERN 3: Props & Component Composition
 // =====================================
 
-/*
-🎯 KEY TAKEAWAYS:
-• Props make components reusable instead of hardcoded
-• One flexible component is better than many rigid components
-• TypeScript interfaces define what props a component expects
-• Default parameters make components more convenient to use
-• Component composition allows building complex UIs from simple parts
-*/
-
-// ✅ GOOD: Reusable component with props
 interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'destructive' | 'Sean';
   children: React.ReactNode;
@@ -909,10 +899,10 @@ function ThemeToggle() {
       </p>
       <div>
         <ul className="list-disc list-inside mb-4" style={{ color: 'var(--muted-foreground)' }}>
-          <li>Context API eliminates "prop drilling" (passing props through many levels)</li>
+          <li>Context API eliminates -prop drilling (passing props through many levels)</li>
           <li>Create context with createContext, provide with Provider, consume with useContext</li>
           <li>Only use context for truly global state (theme, user auth, language)</li>
-          <li>Don't overuse context - local state is often better</li>
+          <li>Dont overuse context - local state is often better</li>
           <li>Always check if context exists before using it to avoid errors</li>
         </ul>
       </div>
@@ -972,7 +962,7 @@ function NotesWidget() {
           <li>useMemo prevents expensive calculations on every render</li>
           <li>Only memoize when you have actual performance problems</li>
           <li>Custom hooks follow the same rules as built-in hooks</li>
-          <li>Hooks must start with "use" and only be called at top level</li>
+          <li>Hooks must start with -use- and only be called at top level</li>
           <li>localStorage integration is a perfect use case for custom hooks</li>
         </ul>
       </div>
